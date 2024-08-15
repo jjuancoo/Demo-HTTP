@@ -51,6 +51,8 @@ android {
 dependencies {
 
     implementation(libs.play.services.wearable)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.tooling.preview)
