@@ -1,7 +1,6 @@
 package com.example.demohttp.presentation
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serial
 
 data class StudentResponse(
     @SerializedName("_id")

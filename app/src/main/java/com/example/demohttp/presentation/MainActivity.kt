@@ -6,6 +6,7 @@
 
 package com.example.demohttp.presentation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,6 +45,8 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import com.example.demohttp.R
 import com.example.demohttp.presentation.theme.DemoHTTPTheme
+import okhttp3.Callback
+import okhttp3.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,9 +109,9 @@ fun Greeting(greetingName: String) {
         )
         Spacer(modifier = Modifier.height(5.dp))
         Button(onClick = { 
-//            fetchStudent(context, student_id.text.toInt()){result ->
-//                name = result
-//            }
+            fetchStudent(context, student_id.text.toInt()){result ->
+                name = result
+            }
         }) {
           Text("Leer")  
         }
@@ -121,6 +124,24 @@ fun Greeting(greetingName: String) {
             )
         }
     }
+}
+
+fun fetchStudent(context: Context, studentId:Int, callback:(String?)->Unit){
+    val apiService = RetrofitClient.instance
+    val call = apiService.getStudent()
+    call.enqueue(object: Callback<StudentResponse> {
+        override fun onResponse(call: Call<StudentResponse>, response: Response){
+            if (response.isSuccessful){
+                val name=response.body()?.name
+                callback("$name")
+            } else
+                callback("Error al descargar el estudiante")
+        }
+
+        override fun onFailure(call: Call<StudentResponse>, t: Throwable){
+            callback("Error de red: ${t.message}")
+        }
+    })
 }
 
 @Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
