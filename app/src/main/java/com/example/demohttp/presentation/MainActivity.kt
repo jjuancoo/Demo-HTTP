@@ -28,6 +28,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -37,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
@@ -80,7 +82,9 @@ fun Greeting(greetingName: String) {
     }
     var context = LocalContext.current
     Column (
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ){
@@ -96,9 +100,26 @@ fun Greeting(greetingName: String) {
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center
             ),
-            modifier = Modifier.width(100.dp).height(50.dp)
+            modifier = Modifier
+                .width(100.dp)
+                .height(50.dp)
         )
         Spacer(modifier = Modifier.height(5.dp))
+        Button(onClick = { 
+//            fetchStudent(context, student_id.text.toInt()){result ->
+//                name = result
+//            }
+        }) {
+          Text("Leer")  
+        }
+        Spacer(modifier = Modifier.height(5.dp))
+        name?.let{
+            Text(
+                text=it,
+                style = TextStyle(fontSize = 20.sp, textAlign = TextAlign.Center),
+                color = Color.Blue
+            )
+        }
     }
 }
 
